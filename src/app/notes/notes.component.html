@@ -1,0 +1,8 @@
+<md-list>
+  <h3 md-subheader>Folders</h3>
+  <md-list-item *ngFor="let memo of memos">
+    <h4 md-line>{{memo.name}}</h4>
+    <p md-line> {{memo.brief}} </p>
+  </md-list-item>
+  <md-divider></md-divider>
+</md-list>
