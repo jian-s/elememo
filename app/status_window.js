@@ -7,7 +7,8 @@ const options = {
         resizable: false,
         frame: false,
         alwaysOnTop: true,
-        show: false
+        show: false,
+        webPreferences: { nodeIntegration: false }
     };
 
 class StatusWindow extends BrowserWindow {

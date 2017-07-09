@@ -6,7 +6,5 @@ import { Memo } from "model/Memo";
   templateUrl: './notes.component.html'
 })
 export class NotesComponent {
-
-  @Input() memos: Array<Memo>;
   
 }

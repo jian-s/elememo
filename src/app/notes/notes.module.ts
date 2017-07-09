@@ -1,16 +1,21 @@
+import { NoteListComponent } from './note-list.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MdListModule } from '@angular/material';
+import { MdListModule, MdButtonModule } from '@angular/material';
 
 import { NotesComponent } from './notes.component';
+import { NoteAreaComponent } from "./note-area.component";
 
 @NgModule({
   declarations: [
-    NotesComponent
+    NotesComponent,
+    NoteListComponent,
+    NoteAreaComponent
   ],
   imports: [
     BrowserModule,
-    MdListModule
+    MdListModule,
+    MdButtonModule
   ],
   exports: [
     NotesComponent

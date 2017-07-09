@@ -1,8 +1,7 @@
-<md-list>
-  <h3 md-subheader>Folders</h3>
-  <md-list-item *ngFor="let memo of memos">
-    <h4 md-line>{{memo.name}}</h4>
-    <p md-line> {{memo.brief}} </p>
-  </md-list-item>
-  <md-divider></md-divider>
-</md-list>
+<div style="display:flex; flex-direction:column; overflow:hidden;">
+
+  <ele-note-area></ele-note-area>
+
+  <ele-note-list></ele-note-list>
+
+</div>

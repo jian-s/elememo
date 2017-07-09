@@ -6,9 +6,8 @@ import { Observable } from "rxjs";
 @Component({
   selector: 'ele-nav',
   template: `
-    <md-tab-group (selectChange)="switchNav($event)">
-        <md-tab label="Tab 1">Content 1</md-tab>
-        <md-tab label="Tab 2">Content 2</md-tab>
+    <md-tab-group class="ele-tab-background" md-stretch-tabs="always" (selectChange)="switchNav($event)">
+        <md-tab label="Elememo"></md-tab>
     </md-tab-group>
   `
 })
