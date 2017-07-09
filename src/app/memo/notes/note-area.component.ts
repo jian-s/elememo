@@ -33,6 +33,7 @@ export class NoteAreaComponent implements OnChanges {
         date: new Date()
       }
       this.memo ? this._memoStore.dispatch(new EditMemoAction(new_memo)) : this._memoStore.dispatch(new AddMemoAction(new_memo));
+      this.memo = undefined;
       this.input.nativeElement.value = '';
     }
   }

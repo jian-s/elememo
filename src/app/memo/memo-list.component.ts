@@ -1,8 +1,9 @@
+import { DeleteMemoAction } from 'app/store/memo.action';
 import { NoteAreaComponent } from './notes/note-area.component';
-import { MemoModel } from './../model/memo.model';
+import { MemoModel } from 'app/model/memo.model';
 import { List } from 'immutable';
 import { Observable } from 'rxjs';
-import { MemoState } from './../store/memo.state';
+import { MemoState } from 'app/store/memo.state';
 import { Component, Input, ViewChild, forwardRef } from '@angular/core';
 import { Memo } from "model/Memo";
 import { Store } from "@ngrx/store";
@@ -34,6 +35,10 @@ export class MemoListComponent {
 
   onEdit(memo: MemoModel) {
     this.activedMemo = memo;
+  }
+
+  onDelete(memo: MemoModel) {
+    this._memoStore.dispatch(new DeleteMemoAction(memo));
   }
   
 }

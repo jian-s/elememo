@@ -9,7 +9,7 @@
       <h5 class="mb-1">{{memo.title}}</h5>
       <div *ngIf="i === activedIndex">
         <a (click)="onEdit(memo)">Edit</a>
-        <a >Delete</a>
+        <a (click)="onDelete(memo)">Delete</a>
       </div>
     </div>
     <p *ngIf="i === activedIndex" class="mb-1">{{memo.content}}</p>

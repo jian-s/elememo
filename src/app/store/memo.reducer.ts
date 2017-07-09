@@ -5,6 +5,7 @@ import { Action } from '@ngrx/store';
 import { MemoState, INITIAL_MEMO_STATE } from './memo.state';
 
 export function memoReducer(state: MemoState = INITIAL_MEMO_STATE, action: Action) : MemoState {
+    console.log(action.type)
     switch (action.type)  {
         case ADD_MEMO_ACTION:
             return handleAddMemoAction(state, <AddMemoAction>action);
@@ -28,9 +29,32 @@ function handleAddMemoAction(state: MemoState, action: AddMemoAction): MemoState
 }
 
 function handleEditMemoAction(state: MemoState, action: EditMemoAction): MemoState {
-    return null;
+    let index = findMemoIndex(state, action.payload);
+    const newState = {
+        items: state.items.set(index, action.payload)
+    }
+    return newState;
 }
 
 function handleDeleteMemoAction(state: MemoState, action: DeleteMemoAction): MemoState {
-    return null;
+    let index = findMemoIndex(state, action.payload);
+    const newState = {
+        items: state.items.remove(index)
+    }
+    return newState;
+}
+
+
+function findMemoIndex(state: MemoState, value: MemoModel): number {
+    let index: number;
+    state.items.forEach((memo: MemoModel, i: number) => {
+        if(memo.id === value.id) {
+            index = i;
+            return false;
+        }
+    })
+    if(typeof index === 'undefined') {
+        throw new ReferenceError(`Target memo '${value.title}' not found ...`);
+    }
+    return index;
 }
