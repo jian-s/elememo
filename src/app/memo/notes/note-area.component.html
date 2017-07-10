@@ -1,7 +1,18 @@
 <div style="position:relative;">
     <textarea 
         #input
+        [@slideInOut]="expandArea"
         class="form-control" 
-        rows="4"></textarea>
-    <button class="btn btn-outline-primary btn-sm" style="float: right; position: absolute; bottom:2px; right: 2px;" (click)="onAdd(input)">add</button>
+        (focus)="preventDefault($event);onFocus()"
+        (blur)="preventDefault($event);onBlur()"
+        style="white-space: pre-line;"></textarea>
+    <div class="btn-group" role="group" style="float: right; position: absolute; bottom:2px; right: 2px;">
+        <button class="btn btn-outline-primary btn-sm" (click)="preventDefault($event);onAdd(input)">
+            {{ memo? 'Edit' : 'Add'}}
+        </button>
+        <button [hidden]="!memo" class="btn btn-outline-danger btn-sm" (click)="preventDefault($event);onCancel()">
+            Cancel
+        </button>
+    </div>
+    
 </div>

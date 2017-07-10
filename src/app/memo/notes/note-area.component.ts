@@ -1,18 +1,31 @@
-import { EditMemoAction } from './../../store/memo.action';
+import { EditMemoAction } from 'app/store/memo.action';
 import { MemoModel } from 'app/model/memo.model';
 import { AddMemoAction } from 'app/store/memo.action';
 import { MemoState } from 'app/store/memo.state';
 import { Store } from '@ngrx/store';
-import { Component, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, OnChanges, trigger, state, style, transition, animate } from '@angular/core';
 
 @Component({
   selector: 'ele-note-area',
-  templateUrl: './note-area.component.html'
+  templateUrl: './note-area.component.html',
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({
+        height: '10em'
+      })),
+      state('out', style({
+        height: '3em'
+      })),
+      transition('in => out', animate('400ms ease-in-out')),
+      transition('out => in', animate('400ms ease-in-out'))
+    ])
+  ]
 })
 export class NoteAreaComponent implements OnChanges {
 
   @Input() memo: MemoModel;
   @ViewChild('input') input: ElementRef;
+  expandArea: string = "out";
 
   constructor(
     private _memoStore: Store<MemoState>
@@ -20,7 +33,8 @@ export class NoteAreaComponent implements OnChanges {
 
   ngOnChanges() {
     if(this.memo) {
-      this.input.nativeElement.value = this.memo.content;
+      this.input.nativeElement.value = this.memo.title + "\n" + this.memo.content;
+      this.onFocus();
     }
   }
 
@@ -36,6 +50,25 @@ export class NoteAreaComponent implements OnChanges {
       this.memo = undefined;
       this.input.nativeElement.value = '';
     }
+  }
+
+  onCancel() {
+    this.memo = undefined;
+    this.input.nativeElement.value = '';
+    this.onBlur();
+  }
+
+  onFocus() {
+    this.expandArea = "in";
+    this.input.nativeElement.focus();
+  }
+
+  onBlur() {
+    this.expandArea = "out";
+  }
+
+  preventDefault(event: Event) {
+    event.preventDefault();
   }
 
   private guid() {
@@ -62,7 +95,6 @@ export class NoteAreaComponent implements OnChanges {
     if(value.startsWith('\n')) {
       return this.genTitle(value.substring(1));
     }
-    let lenDetect = value.length > 20 ? value.substring(0,20) + "..." : value;
-    return lenDetect.includes('\n') ? lenDetect.substring(lenDetect.indexOf('\n')) : lenDetect;
+    return value.includes('\n') ? value.substring(value.indexOf('\n')+1) : value;
   }
 }

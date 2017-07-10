@@ -19,9 +19,14 @@ body {
     margin-top: 2px;
 }
 
-.ele-list-item:hover {
+.ele-bg-hoverable:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ele-opacity-hoverable:hover {
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 .ele-nav {

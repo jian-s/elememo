@@ -1,18 +1,28 @@
 <ele-note-area [memo]="activedMemo"></ele-note-area>
-<div class="list-group">
-  <a 
-    href="#" 
-    *ngFor="let memo of [memos | async][0]; let i = index;" 
-    (click)="onToggle(i)"
-    class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{memo.title}}</h5>
-      <div *ngIf="i === activedIndex">
-        <a (click)="onEdit(memo)">Edit</a>
-        <a (click)="onDelete(memo)">Delete</a>
+
+<div *ngIf="[memos | async][0].size > 0; then eleList else welcome"></div>
+
+<ng-template #welcome>
+  <h4 style="text-align:center">You do not have any memo</h4>
+  <h3 style="text-align:center"><a class="ele-opacity-hoverable" (click)="onCreate()">Create new one</a></h3>
+</ng-template>
+
+<ng-template #eleList>
+  <div class="list-group">
+    <a 
+      href="#" 
+      *ngFor="let memo of [memos | async][0]; let i = index;" 
+      (click)="onToggle(i)"
+      class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{memo.title}}</h5>
+        <div *ngIf="i === activedIndex">
+          <a (click)="onEdit(memo)">Edit</a>
+          <a (click)="onDelete(memo)">Delete</a>
+        </div>
       </div>
-    </div>
-    <p *ngIf="i === activedIndex" class="mb-1">{{memo.content}}</p>
-    <small>{{ memo.date | date:'medium' }}</small>
-  </a>
-</div>
+      <p *ngIf="i === activedIndex" class="mb-1" style="white-space:pre">{{memo.content}}</p>
+      <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
+    </a>
+  </div>
+</ng-template>
