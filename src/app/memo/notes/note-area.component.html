@@ -1,12 +1,18 @@
 <div style="position:relative;">
     <textarea 
         #input
-        [@slideInOut]="expandArea"
+        [@easeInOut]="expandArea"
         class="form-control" 
+        placeholder="Put some notes ... "
+        (keyup)="preventDefault($event);onKeyup(input.value)"
         (focus)="preventDefault($event);onFocus()"
         (blur)="preventDefault($event);onBlur()"
         style="white-space: pre-line;"></textarea>
-    <div class="btn-group" role="group" style="float: right; position: absolute; bottom:2px; right: 2px;">
+    <div 
+        [@appearInOut]="showButton"
+        class="btn-group" 
+        role="group" 
+        style="float: right; position: absolute; bottom:2px; right: 2px;">
         <button class="btn btn-outline-primary btn-sm" (click)="preventDefault($event);onAdd(input)">
             {{ memo? 'Edit' : 'Add'}}
         </button>

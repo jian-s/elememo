@@ -9,7 +9,7 @@ import { Component, ViewChild, ElementRef, Input, OnChanges, trigger, state, sty
   selector: 'ele-note-area',
   templateUrl: './note-area.component.html',
   animations: [
-    trigger('slideInOut', [
+    trigger('easeInOut', [
       state('in', style({
         height: '10em'
       })),
@@ -18,6 +18,16 @@ import { Component, ViewChild, ElementRef, Input, OnChanges, trigger, state, sty
       })),
       transition('in => out', animate('400ms ease-in-out')),
       transition('out => in', animate('400ms ease-in-out'))
+    ]),
+    trigger('appearInOut', [
+      state('in', style({
+        opacity: 1
+      })),
+      state('out', style({
+        opacity: 0
+      })),
+      transition('in => out', animate('200ms')),
+      transition('out => in', animate('200ms'))
     ])
   ]
 })
@@ -26,6 +36,8 @@ export class NoteAreaComponent implements OnChanges {
   @Input() memo: MemoModel;
   @ViewChild('input') input: ElementRef;
   expandArea: string = "out";
+  showButton: string = "out";
+  
 
   constructor(
     private _memoStore: Store<MemoState>
@@ -34,6 +46,8 @@ export class NoteAreaComponent implements OnChanges {
   ngOnChanges() {
     if(this.memo) {
       this.input.nativeElement.value = this.memo.title + "\n" + this.memo.content;
+      this.showButton = "in";
+      console.log("on changes")
       this.onFocus();
     }
   }
@@ -55,12 +69,21 @@ export class NoteAreaComponent implements OnChanges {
   onCancel() {
     this.memo = undefined;
     this.input.nativeElement.value = '';
+    this.showButton = "out";
     this.onBlur();
   }
 
   onFocus() {
     this.expandArea = "in";
     this.input.nativeElement.focus();
+  }
+
+  onKeyup(e: string) {
+    if(e.length > 0) {
+      this.showButton = "in";
+    } else {
+      this.showButton = "out";
+    }
   }
 
   onBlur() {

@@ -1,6 +1,8 @@
 <ele-note-area [memo]="activedMemo"></ele-note-area>
 
-<div *ngIf="[memos | async][0].size > 0; then eleList else welcome"></div>
+<div style="overflow:scroll; height: 100%;">
+
+<div *ngIf="memos.size > 0; then eleList else welcome"></div>
 
 <ng-template #welcome>
   <h4 style="text-align:center">You do not have any memo</h4>
@@ -11,18 +13,21 @@
   <div class="list-group">
     <a 
       href="#" 
-      *ngFor="let memo of [memos | async][0]; let i = index;" 
+      [@easeInOut]
+      *ngFor="let memo of memos; let i = index;" 
       (click)="onToggle(i)"
       class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{memo.title}}</h5>
         <div *ngIf="i === activedIndex">
-          <a (click)="onEdit(memo)">Edit</a>
-          <a (click)="onDelete(memo)">Delete</a>
+          <a (click)="onEdit(memo)"><img src="assets/img/edit.png" alt=""></a>
+          <a (click)="onDelete(memo)"><img src="assets/img/delete.png" alt=""></a>
         </div>
       </div>
-      <p *ngIf="i === activedIndex" class="mb-1" style="white-space:pre">{{memo.content}}</p>
+      <p [@slideInOut] *ngIf="i === activedIndex" style="white-space:pre">{{memo.content}}</p>
       <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
     </a>
   </div>
 </ng-template>
+
+</div>

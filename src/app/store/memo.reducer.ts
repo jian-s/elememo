@@ -51,7 +51,7 @@ function handleDeleteMemoAction(state: MemoState, action: DeleteMemoAction): Mem
 }
 
 function handleLoadDataAction(state: MemoState, action: LoadDataAction) : MemoState {
-    let newCollection = action.rewrite ? List<MemoModel>() : state.items
+    let newCollection = action.rewrite ? List<MemoModel>([]) : state.items
     
     action.payload.forEach((value) => {
         newCollection = newCollection.push(value);
