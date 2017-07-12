@@ -1,31 +1,33 @@
-<ele-note-area [memo]="activedMemo" (focused)="onFocused($event)"></ele-note-area>
+<div style="height: 100%; display:flex; flex-direction:column; position:relative;">
 
-<div style="overflow:scroll; height: 100%;">
+<ele-note-area style="position:relative" [memo]="activedMemo" (focused)="onFocused($event)"></ele-note-area>
 
-<div class="list-group" style="background-color:#FFF;">
-  <a 
-    href="#" 
-    [@easeState]
-    *ngFor="let memo of memos; let i = index;" 
-    (click)="onToggle(i)"
-    class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{memo.title}}</h5>
-      <div *ngIf="i === activedIndex">
-        <a (click)="onEdit(memo)"><img src="assets/img/edit.png" alt=""></a>
-        <a (click)="onDelete(memo)"><img src="assets/img/delete.png" alt=""></a>
+<div style="overflow:scroll;position:relative; height:auto;">
+  <div class="list-group" style="background-color:#FFF; display:block;">
+    <a 
+      href="#" 
+      [@easeState]
+      *ngFor="let memo of memos; let i = index;" 
+      (click)="onToggle(i)"
+      class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{memo.title}}</h5>
+        <div *ngIf="i === activedIndex">
+          <a (click)="onEdit(memo)"><img src="assets/img/edit.png" alt=""></a>
+          <a (click)="onDelete(memo)"><img src="assets/img/delete.png" alt=""></a>
+        </div>
       </div>
-    </div>
-    <p [@slideState] *ngIf="i === activedIndex" style="white-space:pre">{{memo.content}}</p>
-    <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
-  </a>
-  <button 
-    [@slideState]
-    *ngIf="showButton"
-    type="button" 
-    style="margin-top:1px;" 
-    class="btn btn-outline-primary btn-block"
-    (click)="onCreate()">+ create new</button>
+      <p [@slideState] *ngIf="i === activedIndex" style="white-space:pre">{{memo.content}}</p>
+      <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
+    </a>
+    <button 
+      [@slideState]
+      *ngIf="showButton"
+      type="button" 
+      style="margin-top:1px;margin-bottom:3px;" 
+      class="btn btn-outline-primary btn-block"
+      (click)="onCreate()">+ create new</button>
+  </div>
 </div>
 
 </div>
