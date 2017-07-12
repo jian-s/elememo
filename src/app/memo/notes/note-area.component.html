@@ -6,7 +6,7 @@
         placeholder="Put some notes ... "
         (keyup)="preventDefault($event);onKeyup(input.value)"
         (focus)="preventDefault($event);onFocus()"
-        (blur)="preventDefault($event);onBlur()"
+        (blur)="preventDefault($event);onBlur(input.value)"
         style="white-space: pre-line;"></textarea>
     <div 
         [@appearInOut]="showButton"
@@ -17,7 +17,7 @@
             {{ memo? 'Edit' : 'Add'}}
         </button>
         <button [hidden]="!memo" class="btn btn-outline-danger btn-sm" (click)="preventDefault($event);onCancel()">
-            Cancel
+            Abort
         </button>
     </div>
     

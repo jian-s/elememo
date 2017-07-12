@@ -1,3 +1,4 @@
+import { slideStateTrigger, easeStateTrigger } from './../shared/animations';
 
 import { DeleteMemoAction, LoadDataAction } from 'app/store/memo.action';
 import { NoteAreaComponent } from './notes/note-area.component';
@@ -5,7 +6,7 @@ import { MemoModel } from 'app/model/memo.model';
 import { List } from 'immutable';
 import { Observable } from 'rxjs';
 import { MemoState } from 'app/store/memo.state';
-import { Component, Input, ViewChild, forwardRef, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, OnInit, trigger, state, style, transition, animate, HostBinding } from '@angular/core';
 import { Memo } from "model/Memo";
 import { Store } from "@ngrx/store";
 
@@ -13,39 +14,21 @@ import { Store } from "@ngrx/store";
   selector: 'ele-memo-list',
   templateUrl: './memo-list.component.html',
   animations: [
-    trigger(
-      'slideInOut',
-      [
-        transition(
-        ':enter', [
-          style({ 'opacity': 0}),
-          animate('200ms', style({ 'opacity': 1}))
-        ]
-      )]
-    ),
-    trigger(
-      'easeInOut',
-      [
-        transition(
-        ':enter', [
-          style({transform: 'translateX(-100%)', 'opacity': 0}),
-          animate('300ms', style({transform: 'translateX(0)', 'opacity': 1}))
-        ]
-      ),
-        transition(
-        ':leave', [
-          style({transform: 'translateX(0)', 'opacity': 1}),
-          animate('200ms', style({transform: 'translateX(-100%)', 'opacity': 0}))
-        ]
-      )]
-    ),
-  ]
+    slideStateTrigger({startOpacity: 0, duration: '200ms'}),
+    easeStateTrigger({duration: '300ms'}, {duration: '300ms'})
+  ],
+  host: {
+    '[@slideState]': 'true',
+    '[@easeState]': 'true'
+  }
 })
 export class MemoListComponent implements OnInit {
 
   @ViewChild(NoteAreaComponent) noteComponent: NoteAreaComponent;
   memos: List<MemoModel> = List<MemoModel>([]);
   activedIndex: number;
+
+  showButton: boolean = true;
 
   activedMemo: MemoModel;
 
@@ -82,6 +65,10 @@ export class MemoListComponent implements OnInit {
 
   onDelete(memo: MemoModel) {
     this._memoStore.dispatch(new DeleteMemoAction(memo));
+  }
+
+  onFocused(value: boolean) {
+    value ? this.showButton = false : this.showButton = true;
   }
   
 }

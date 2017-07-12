@@ -3,7 +3,7 @@ import { MemoModel } from 'app/model/memo.model';
 import { AddMemoAction } from 'app/store/memo.action';
 import { MemoState } from 'app/store/memo.state';
 import { Store } from '@ngrx/store';
-import { Component, ViewChild, ElementRef, Input, OnChanges, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, OnChanges, trigger, state, style, transition, animate, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'ele-note-area',
@@ -34,6 +34,7 @@ import { Component, ViewChild, ElementRef, Input, OnChanges, trigger, state, sty
 export class NoteAreaComponent implements OnChanges {
 
   @Input() memo: MemoModel;
+  @Output() focused: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('input') input: ElementRef;
   expandArea: string = "out";
   showButton: string = "out";
@@ -70,12 +71,13 @@ export class NoteAreaComponent implements OnChanges {
     this.memo = undefined;
     this.input.nativeElement.value = '';
     this.showButton = "out";
-    this.onBlur();
+    this.onBlur(this.input.nativeElement.value);
   }
 
   onFocus() {
     this.expandArea = "in";
     this.input.nativeElement.focus();
+    this.focused.emit(true);
   }
 
   onKeyup(e: string) {
@@ -86,8 +88,14 @@ export class NoteAreaComponent implements OnChanges {
     }
   }
 
-  onBlur() {
+  onBlur(e: string) {
     this.expandArea = "out";
+    if(e.length > 0) {
+      this.showButton = "in";
+    } else {
+      this.showButton = "out";
+    }
+    this.focused.emit(false);
   }
 
   preventDefault(event: Event) {

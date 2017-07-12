@@ -2,7 +2,7 @@ const electron = require('electron');
 const { BrowserWindow } = electron;
 
 const options = {
-        width: 300,
+        width: 350,
         height: 500,
         resizable: false,
         frame: false,

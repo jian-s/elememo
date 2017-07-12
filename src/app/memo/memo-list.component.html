@@ -1,33 +1,31 @@
-<ele-note-area [memo]="activedMemo"></ele-note-area>
+<ele-note-area [memo]="activedMemo" (focused)="onFocused($event)"></ele-note-area>
 
 <div style="overflow:scroll; height: 100%;">
 
-<div *ngIf="memos.size > 0; then eleList else welcome"></div>
-
-<ng-template #welcome>
-  <h4 style="text-align:center">You do not have any memo</h4>
-  <h3 style="text-align:center"><a class="ele-opacity-hoverable" (click)="onCreate()">Create new one</a></h3>
-</ng-template>
-
-<ng-template #eleList>
-  <div class="list-group">
-    <a 
-      href="#" 
-      [@easeInOut]
-      *ngFor="let memo of memos; let i = index;" 
-      (click)="onToggle(i)"
-      class="list-group-item list-group-item-action flex-column align-items-start">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{memo.title}}</h5>
-        <div *ngIf="i === activedIndex">
-          <a (click)="onEdit(memo)"><img src="assets/img/edit.png" alt=""></a>
-          <a (click)="onDelete(memo)"><img src="assets/img/delete.png" alt=""></a>
-        </div>
+<div class="list-group" style="background-color:#FFF;">
+  <a 
+    href="#" 
+    [@easeState]
+    *ngFor="let memo of memos; let i = index;" 
+    (click)="onToggle(i)"
+    class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{memo.title}}</h5>
+      <div *ngIf="i === activedIndex">
+        <a (click)="onEdit(memo)"><img src="assets/img/edit.png" alt=""></a>
+        <a (click)="onDelete(memo)"><img src="assets/img/delete.png" alt=""></a>
       </div>
-      <p [@slideInOut] *ngIf="i === activedIndex" style="white-space:pre">{{memo.content}}</p>
-      <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
-    </a>
-  </div>
-</ng-template>
+    </div>
+    <p [@slideState] *ngIf="i === activedIndex" style="white-space:pre">{{memo.content}}</p>
+    <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
+  </a>
+  <button 
+    [@slideState]
+    *ngIf="showButton"
+    type="button" 
+    style="margin-top:1px;" 
+    class="btn btn-outline-primary btn-block"
+    (click)="onCreate()">+ create new</button>
+</div>
 
 </div>
