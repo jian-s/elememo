@@ -1,8 +1,8 @@
 <div style="height: 100%; display:flex; flex-direction:column; position:relative;">
 
-<ele-note-area style="position:relative" [memo]="activedMemo" (focused)="onFocused($event)"></ele-note-area>
+<ele-note-area style="position:relative; padding-left:0.2em; padding-right:0.2em; padding-bottom:0.2em;" [memo]="activedMemo" (focused)="onFocused($event)"></ele-note-area>
 
-<div style="overflow:scroll;position:relative; height:auto;">
+<div style="overflow:scroll;position:relative; height:auto; padding-bottom: 0.5em; padding-left:2px;padding-right:2px">
   <div class="list-group" style="background-color:#FFF; display:block;">
     <a 
       href="#" 
@@ -20,14 +20,15 @@
       <p [@slideState] *ngIf="i === activedIndex" style="white-space:pre">{{memo.content}}</p>
       <small style="text-align:end;width:100%;">{{ memo.date | date:'medium' }}</small>
     </a>
-    <button 
-      [@slideState]
-      *ngIf="showButton"
-      type="button" 
-      style="margin-top:1px;margin-bottom:3px;" 
-      class="btn btn-outline-primary btn-block"
-      (click)="onCreate()">+ create new</button>
   </div>
+  <div style="width: 100%; padding:3px;" >
+      <button 
+        [@slideState]
+        *ngIf="showButton"
+        type="button" 
+        class="btn btn-outline-primary btn-block"
+        (click)="onCreate()">+ create new</button>
+    </div>
 </div>
 
 </div>

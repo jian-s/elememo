@@ -20,7 +20,15 @@ import { Store } from "@ngrx/store";
   host: {
     '[@slideState]': 'true',
     '[@easeState]': 'true'
-  }
+  },
+  styles: [`
+    .list-group>:first-child {
+      box-shadow: inset 0px 11px 8px -10px #888;
+    }
+    .list-group>:last-child {
+      box-shadow: inset 0px -11px 8px -10px #888;
+    }
+  `]
 })
 export class MemoListComponent implements OnInit {
 
